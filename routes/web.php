@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ToDoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ToDoController::class, 'index'])->middleware('auth');
+Route::post('/create_to_do', [ToDoController::class, 'store'])->name('todos.store')->middleware('auth');
+Route::put('/edit_to_do/{id}', [ToDoController::class, 'update'])->name('todos.update')->middleware('auth');
+Route::get('/search_to_do/', [ToDoController::class, 'search'])->name('todos.search')->middleware('auth');
+Route::delete('/delete_to_do/{id}', [TodoController::class, 'destroy'])->name('todos.destroy')->middleware('auth');
+
+require __DIR__.'/auth.php';
