@@ -18,14 +18,14 @@ class ToDoService
      *
      * @return Collection|JsonResponse
      */
-    public function getUserTodos(): Collection|JsonResponse
+    public function getUserTodos(): JsonResponse
     {
         $user = auth()->user();
 
         if ($user) {
             $toDos = ToDo::where('user_id', $user->id)->get();
 
-            return $toDos;
+            return response()->json($toDos);
         }
 
         return response()->json(['error' => 'User not authenticated'], 401);
